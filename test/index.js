@@ -2,7 +2,8 @@ const test = require('tape')
 
 const hooki = require('../')
 
-describe('hooki', function(t) {
-  t.ok(hooki, 'module is require-able')
+test('hooki', function(t) {
+  t.ok(hooki, 'grab bag is require-able')
+  t.equal(Object.keys(hooki).length, 3, '3 modules')
   t.end()
 })
