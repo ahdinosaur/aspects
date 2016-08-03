@@ -1,6 +1,8 @@
 const test = require('tape')
 
 const { around } = require('../')
+const sync = around.bind(null, 'sync')
+const async = around.bind(null, 'async')
 
 test('around', function(t) {
   t.ok(around, 'module is require-able')
@@ -23,8 +25,6 @@ function pre (fn, args) {
 }
 
 test('around sync', function (t) {
-  const sync = around.bind(null, 'sync')
-
   t.equal(hello('foo'), 'Hello, foo.')
   const hello2 = sync(hello, post)
   t.equal(hello2('foo'), 'Hello, foo!!!')
@@ -65,16 +65,17 @@ function precheck (fn, [arg], cb) {
 }
 
 test('async', function (t) {
+
   var n = 2
 
-  around(around(tick, alwaysAsync), double)
+  async(async(tick, alwaysAsync), double)
     (3, function (_, v, tick) {
       t.equal(v, 7)
       t.notOk(tick)
       next()
     })
 
-  around(around(tick, precheck), alwaysAsync)
+  async(async(tick, precheck), alwaysAsync)
     (7, function (_, v, tick) {
       t.equal(v, 8)
       t.ok(tick)
@@ -87,15 +88,14 @@ test('async', function (t) {
   }
 })
 
-/*
-
 test('async, left to right', function (t) {
   var a, b, c
-  Hoox(async).hook(function (fn, args) {
+
+  async(tick, function (fn, [arg], cb) {
     a = true
-    fn(args[0], function (_, v) {
+    fn(arg, function (_, v) {
       t.equal(v, 4)
-      args[1](_, v * 2)
+      cb(_, v * 2)
     })
   })
     (3, function (_, v) {
@@ -103,16 +103,14 @@ test('async, left to right', function (t) {
       t.equal(v, 8)
       t.end()
     })
-
 })
-
 
 test('check a thing, maybe return something different, else change result', function (t) {
 
-  var h = Hoox(function (a) {
+  var h = sync(function (a) {
     return a * 100
-  }).hook(function (fn, args) {
-    var a = args[0]
+  }, function (fn, [arg]) {
+    var a = arg
 
     if(isNaN(a)) return 0
 
@@ -123,6 +121,4 @@ test('check a thing, maybe return something different, else change result', func
   t.equal(h(0.5), 50)
 
   t.end()
-
 })
-*/
