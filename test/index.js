@@ -1,9 +1,9 @@
 const test = require('tape')
 
-const hooki = require('../')
+const aspects = require('../')
 
-test('hooki', function(t) {
-  t.ok(hooki, 'grab bag is require-able')
-  t.equal(Object.keys(hooki).length, 3, '3 modules')
+test('aspects', function(t) {
+  t.ok(aspects, 'grab bag is require-able')
+  t.equal(Object.keys(aspects).length, 3, '3 modules')
   t.end()
 })

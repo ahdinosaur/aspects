@@ -1,28 +1,23 @@
-module.exports = after
+module.exports = {
+  sync,
+  async
+}
 
-function after (type, fn, hook) {
-  if (arguments.length === 2) {
-    return after('async', type, fn)
+function sync (fn, hook) {
+  return (...args) => {
+    const errOrValue = fn(...args)
+    return errOrValue instanceof Error
+      ? hook(errOrValue)
+      : hook(null, errOrValue)
   }
+}
 
-  switch (type) {
-    case 'sync':
-      return (...args) => {
-        try {
-          return hook(null, fn(...args))
-        } catch (err) {
-          return hook(err)
-        }
-      }
-    case 'async':
-      return (...args) => {
-        const cb = args.pop()
-        fn(...[...args, (err, value) => {
-          hook(err, value, cb)
-        }])
-      }
-    default:
-      throw new Error('unrecognized before type: '+type)
+function async (fn, hook) {
+  return (...args) => {
+    const cb = args.pop()
+    fn(...[...args, (err, value) => {
+      hook(err, value, cb)
+    }])
   }
 }
 

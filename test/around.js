@@ -1,12 +1,11 @@
 const test = require('tape')
 
 const { around } = require('../')
-const sync = around.bind(null, 'sync')
-const async = around.bind(null, 'async')
+const { sync, async } = around
 
 test('around', function(t) {
   t.ok(around, 'module is require-able')
-  t.equal(typeof around, 'function', 'module is function')
+  t.equal(typeof around, 'object', 'module is function')
   t.end()
 })
 

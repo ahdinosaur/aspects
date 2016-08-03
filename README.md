@@ -1,14 +1,46 @@
-# hooki
+# aspects
 
-before, after, and around hooks for sync and sync functions
+before, after, and around hooks for sync and async functions
+
+also known as [aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming)
+
+**work in progress**
 
 ```shell
-npm install --save hooki
+#npm install --save ahdinosaur/aspects
 ```
 
 ## usage
 
-### `hooki = require('hooki')`
+### `aspects = require('aspects')`
+
+### `fn = aspects.around.sync(fn, hook)`
+
+`hook` is function of shape `(fn, args) => newFn`
+
+### `fn = aspects.around.async(fn, hook)`
+
+`hook` is function of shape `(fn, args, cb) => newFn`
+
+### `fn = aspects.before.sync(fn, hook)`
+
+`hook` is function of shape `(args) => Error | newArgs`
+
+### `fn = aspects.before.async(fn, hook)`
+
+`hook` is function of shape `(args, cb) => cb(Error, newArgs)`
+
+### `fn = aspects.after.sync(fn, hook)`
+
+`hook` is function of shape `(err, value) => Error | newValue`
+
+### `fn = aspects.after.async(fn, hook)`
+
+`hook` is function of shape `(err, value, cb) => cb(Error, newValue)`
+
+## inspiration
+
+- [`dominictarr/hoox`](https://github.com/dominictarr/hoox)
 
 ## license
 
