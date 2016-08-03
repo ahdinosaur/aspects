@@ -38,53 +38,46 @@ test('around sync', function (t) {
   t.end()
 })
 
-/*
-function async (n, cb) {
+function tick (n, cb) {
   cb(null, n + 1)
 }
 
-function alwaysAsync(fn, args) {
+function alwaysAsync(fn, [arg], cb) {
   var sync = true
-  fn(args[0], function (err, value) {
+  fn(arg, function (err, value) {
     if(sync) process.nextTick(function () {
-      args[1](err, value, false)
+      cb(err, value, false)
     })
     else
-      args[1](err, value, true)
+      cb(err, value, true)
   })
   sync = false
 }
 
-function double (fn, args) {
-  return fn(args[0]*2, args[1])
+function double (fn, [arg], cb) {
+  return fn(arg*2, cb)
 }
 
-function precheck (fn, args) {
+function precheck (fn, [arg], cb) {
   setTimeout(function () {
-    fn.apply(null, args)
+    fn(arg, cb)
   })
 }
 
 test('async', function (t) {
-  var n = 3
+  var n = 2
 
-  return around(async)
-    (1, function (_, v) {
-      t.equal(v, 2)
-      next()
-    })
-
-  Hoox(async).hook(alwaysAsync).hook(double)
-    (3, function (_, v, async) {
+  around(around(tick, alwaysAsync), double)
+    (3, function (_, v, tick) {
       t.equal(v, 7)
-      t.notOk(async)
+      t.notOk(tick)
       next()
     })
 
-  Hoox(async).hook(precheck).hook(alwaysAsync)
-    (7, function (_, v, async) {
+  around(around(tick, precheck), alwaysAsync)
+    (7, function (_, v, tick) {
       t.equal(v, 8)
-      t.ok(async)
+      t.ok(tick)
       next()
     })
 
@@ -94,7 +87,7 @@ test('async', function (t) {
   }
 })
 
-
+/*
 
 test('async, left to right', function (t) {
   var a, b, c
