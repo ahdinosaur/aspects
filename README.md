@@ -32,11 +32,11 @@ also known as [aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect
 
 ### `fn = aspects.after.sync(fn, hook)`
 
-`hook` is function of shape `(err, value) => Error | newValue`
+`hook` is function of shape `(value) => Error | newValue`
 
 ### `fn = aspects.after.async(fn, hook)`
 
-`hook` is function of shape `(err, value, cb) => cb(Error, newValue)`
+`hook` is function of shape `(value, cb) => cb(Error, newValue)`
 
 ## inspiration
 
