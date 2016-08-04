@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ahdinosaur/aspects#readme",
   "devDependencies": {
+    "cat-names": "^1.0.2",
     "tape": "^4.5.1"
   },
   "dependencies": {}
