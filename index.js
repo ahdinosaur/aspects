@@ -1,6 +1,6 @@
-const before = require('./before')
-const after = require('./after')
-const around = require('./around')
+var before = require('./before')
+var after = require('./after')
+var around = require('./around')
 
 module.exports = {
   before: before,

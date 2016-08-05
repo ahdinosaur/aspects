@@ -1,4 +1,4 @@
-const sliced = require('sliced')
+var sliced = require('sliced')
 
 module.exports = {
   sync: sync,
@@ -7,18 +7,18 @@ module.exports = {
 
 function sync (fn, hook) {
   return function () {
-    const args = sliced(arguments)
-    const err = hook.call(this, args)
+    var args = sliced(arguments)
+    var err = hook.call(this, args)
     if (err instanceof Error) return err
-    const newArgs = err
+    var newArgs = err
     return fn.apply(this, newArgs)
   }
 }
 
 function async (fn, hook) {
   return function () {
-    const args = sliced(arguments)
-    const cb = args.pop()
+    var args = sliced(arguments)
+    var cb = args.pop()
     hook.call(this, args, function (err, newArgs) {
       if (err) cb(err)
       else fn.apply(this, newArgs.concat([cb]))
