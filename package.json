@@ -1,6 +1,6 @@
 {
   "name": "aspects",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "before, after, and around hooks for sync and sync functions",
   "main": "index.js",
   "scripts": {
