@@ -4,7 +4,7 @@
   "description": "before, after, and around hooks for sync and sync functions",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js"
+    "test": "standard && tape test/*.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ahdinosaur/aspects#readme",
   "devDependencies": {
     "cat-names": "^1.0.2",
+    "standard": "^7.1.2",
     "tape": "^4.5.1"
   },
   "dependencies": {}

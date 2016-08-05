@@ -3,7 +3,7 @@ const test = require('tape')
 const { before } = require('../')
 const { sync, async } = before
 
-test('before', function(t) {
+test('before', function (t) {
   t.ok(before, 'module is require-able')
   t.equal(typeof before, 'object', 'module is object')
   t.end()
@@ -16,7 +16,7 @@ function greet (greeting, name) {
 const upper = argsTo('UpperCase')
 const lower = argsTo('LowerCase')
 function argsTo (name) {
-  return (args) => args.map(a => a['to'+name]())
+  return (args) => args.map(a => a['to' + name]())
 }
 
 function preError (args) {
@@ -38,7 +38,6 @@ test('before sync', function (t) {
 
   t.end()
 })
-
 
 function tick (n, cb) {
   cb(null, n + 1)
@@ -62,21 +61,19 @@ function preFail ([arg], cb) {
 test('before async', function (t) {
   var n = 2
 
-  async(async(tick, prePass), double)
-    (3, function (err, v) {
-      t.error(err)
-      t.equal(v, 7)
-      next()
-    })
+  async(async(tick, prePass), double)(3, function (err, v) {
+    t.error(err)
+    t.equal(v, 7)
+    next()
+  })
 
-  async(async(tick, double), preFail)
-    (3, function (err) {
-      t.ok(err instanceof Error)
-      next()
-    })
+  async(async(tick, double), preFail)(3, function (err) {
+    t.ok(err instanceof Error)
+    next()
+  })
 
   function next () {
-    if(--n) return
+    if (--n) return
     t.end()
   }
 })

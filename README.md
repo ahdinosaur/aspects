@@ -13,9 +13,10 @@ npm install --save ahdinosaur/aspects
 ## example
 
 ```js
-const { before, after, around } = require('aspects')
+const { before, after, around } = require('aspects').sync
 const { all: catNames, random: catName } = require('cat-names')
 
+// suppose a function
 function hello (name) {
   return `Hello, ${name}!`
 }
@@ -23,34 +24,39 @@ function hello (name) {
 console.log(hello(catName()))
 // Hello, Misty!
 
-const onlyCats = before.sync(hello, ([name]) => {
+// what if we could hook into _before_
+// the function runs to check its arguments?
+function onlyCats ([name]) {
   return (catNames.indexOf(name) !== -1)
     ? [name]
     : new Error(`${name} is not a cat name.`)
-})
+}
 
-console.log(onlyCats(catName()))
-// Hello, Oliver!
-
-console.log(onlyCats(reverse(catName())))
-// Error: ylliL is not a cat name.
-//    at before.sync (example.js:13:7)
-//    at before.js:8:17
-//    at Object.<anonymous> (example.js:17:13)
-
-const loud = after.sync(onlyCats, (value) => {
-  return value.toUpperCase()
-})
-
-console.log(loud(catName()))
-// HELLO, SNICKERS!
-
-console.log(loud(reverse(catName())))
+console.log(before(hello, onlyCats)(catName()))
+// Hello, Bandit!
+console.log(before(hello, onlyCats)(reverse(catName())))
 // Error: aloL is not a cat name.
 //    at before.sync (example.js:13:7)
 //    at before.js:8:17
 //    at Object.<anonymous> (example.js:17:13)
 
+// or _after_ to change the return value?
+function loud (value) {
+  return value.toUpperCase()
+}
+
+console.log(after(hello, loud)(catName()))
+// HELLO, SNICKERS!
+
+// or _around_, to wrap the function?
+function character (fn, args) {
+  return fn.apply(null, args.map(a => a[0])) + '!!!'
+}
+
+console.log(around(hello, character)(catName()))
+// Hello, M!!!!
+
+// utility function
 function reverse (str) {
   return str.split('').reverse().join('')
 }
