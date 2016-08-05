@@ -1,24 +1,27 @@
+const sliced = require('sliced')
+
 module.exports = {
-  sync,
-  async
+  sync: sync,
+  async: async
 }
 
 function sync (fn, hook) {
-  return (...args) => {
-    const errOrValue = fn(...args)
+  return function () {
+    const errOrValue = fn.apply(this, arguments)
     return errOrValue instanceof Error
       ? errOrValue
-      : hook(errOrValue)
+      : hook.call(this, errOrValue)
   }
 }
 
 function async (fn, hook) {
-  return (...args) => {
+  return function () {
+    const args = sliced(arguments)
     const cb = args.pop()
-    fn(...[...args, (err, value) => {
+    fn.apply(this, args.concat([function (err, value) {
       if (err) cb(err)
-      else hook(value, cb)
-    }])
+      else hook.call(this, value, cb)
+    }.bind(this)]))
   }
 }
 

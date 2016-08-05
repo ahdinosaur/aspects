@@ -3,9 +3,9 @@ const after = require('./after')
 const around = require('./around')
 
 module.exports = {
-  before,
-  after,
-  around,
+  before: before,
+  after: after,
+  around: around,
 
   sync: {
     before: before.sync,

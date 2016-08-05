@@ -11,3 +11,7 @@ test('aspects', function (t) {
   t.ok(aspects.async)
   t.end()
 })
+
+require('./before')
+require('./after')
+require('./around')

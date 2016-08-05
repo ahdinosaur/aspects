@@ -4,7 +4,11 @@
   "description": "before, after, and around hooks for sync and sync functions",
   "main": "index.js",
   "scripts": {
-    "test": "standard && tape test/*.js"
+    "test:deps": "dependency-check . && dependency-check . --extra --no-dev",
+    "test:lint": "standard",
+    "test:node": "NODE_ENV=test tape test/index.js",
+    "test:coverage": "NODE_ENV=test istanbul cover test",
+    "test": "npm-run-all -s test:deps test:lint test:node"
   },
   "repository": {
     "type": "git",
@@ -19,8 +23,13 @@
   "homepage": "https://github.com/ahdinosaur/aspects#readme",
   "devDependencies": {
     "cat-names": "^1.0.2",
+    "dependency-check": "^2.6.0",
+    "istanbul": "^0.4.4",
+    "npm-run-all": "^2.3.0",
     "standard": "^7.1.2",
     "tape": "^4.5.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "sliced": "^1.0.1"
+  }
 }

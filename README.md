@@ -1,13 +1,13 @@
-# aspects
+# aspects [![stability][stability-badge]][stability-url]
+[![npm version][version-badge]][version-url] [![test status][test-badge]][test-url] [![test coverage][coverage-badge]][coverage-url]
+[![downloads][downloads-badge]][downloads-url] [![standard style][standard-badge]][standard-url]
 
 before, after, and around hooks for sync and async functions
 
 also known as [aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming)
 
-**work in progress**
-
 ```shell
-npm install --save ahdinosaur/aspects
+npm install --save aspects
 ```
 
 ## example
@@ -124,3 +124,16 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+[stability-badge]: https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square
+[stability-url]: https://nodejs.org/api/documentation.html#documentation_stability_index
+[version-badge]: https://img.shields.io/npm/v/aspects.svg?style=flat-square
+[version-url]: https://npmjs.org/package/aspects
+[test-badge]: https://img.shields.io/travis/ahdinosaur/aspects/master.svg?style=flat-square
+[test-url]: https://travis-ci.org/ahdinosaur/aspects
+[coverage-badge]: https://img.shields.io/codecov/c/github/ahdinosaur/aspects/master.svg?style=flat-square
+[coverage-url]: https://codecov.io/github/ahdinosaur/aspects
+[downloads-badge]: http://img.shields.io/npm/dm/aspects.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/aspects
+[standard-badge]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
+[standard-url]: https://github.com/feross/standard
